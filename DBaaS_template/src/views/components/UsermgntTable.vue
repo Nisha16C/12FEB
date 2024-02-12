@@ -48,12 +48,16 @@
                 <span class="text-secondary text-xs font-weight-bold">{{ formatDate(user.last_login) }}</span>
               </td>
               <td class="align-middle">
-                <a
+                <!-- <a
                   href="javascript:;"
                   class="text-secondary font-weight-bold text-xs"
                   data-toggle="tooltip"
                   data-original-title="Edit user"
-                >Edit</a>
+                >Assign Roles</a> -->
+                <argon-button color="success" size="md" variant="gradient" @click="prepareRename(user)" type="button"
+                  class="ml-4 btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                  Assign Roles
+                </argon-button>
               </td>
             </tr>
           </tbody>
@@ -61,13 +65,64 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" ref="myModal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel">Select Roles</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Owner
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Viewer
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Editor
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <argon-button color="secondary" size="md" variant="gradient" type="button" class="ml-4 btn btn-danger"
+                        data-toggle="modal" data-target="#exampleModal">
+                        Cancel
+                    </argon-button>
+                    <argon-button color="danger" size="md" variant="gradient" @click.prevent="assignRole()" type="button"
+                        class="ml-4 btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                        Assign Roles
+                    </argon-button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
   
 <script>
 import axios from "axios";
+import ArgonButton from "@/components/ArgonButton.vue";
+// import ArgonInput from "@/components/ArgonInput.vue";
 
 export default {
   name: "users-table",
+  components: {
+    // Card,
+    // projectsTable,
+    ArgonButton,
+    // ArgonInput
+  },
   data() {
     return {
       users: [], // Initialize clusters as an empty array
@@ -78,10 +133,16 @@ export default {
     this.fetchusers();
   },
   methods: {
+    assignRole(user) {
+      // Emit an event to notify the parent component about the rename action
+      this.renamingProjectId = user.id;
+      this.newProjectName = user.project_name;
+      this.$emit("assign-roles", user);
+    },
     async fetchusers() {
       try {
         // Make a GET request to the endpoint
-        const response = await axios.get('http://172.16.1.92:8002/api/v1/users/');
+        const response = await axios.get('http://172.16.1.97:8002/api/v1/users/');
         
         // Update the clusters data with the fetched data
         this.users = response.data;

@@ -22,6 +22,8 @@ import RestoreBackup from "../views/RestoreBackup.vue";
 import BackupDetails from "../views/BackupDetails.vue";
 
 import Profile from "../views/Profile.vue";
+import USER from "../views/USER.vue"; 
+// import userRoleassignment from "../views/userRoleassignment.vue";
 import ActivityLog from "../views/ActivityLog.vue";
 
 const routes = [
@@ -138,6 +140,12 @@ const routes = [
     name: "ActivityLog",
     component: ActivityLog,
   },
+  {
+    path: "/USER",
+    name: "USER",
+    component: USER,
+  },
+ 
 ];
 
 const router = createRouter({
