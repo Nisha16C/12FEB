@@ -12,7 +12,7 @@
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> User Name & ID </th>
 
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Status </th>
-              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Role </th>
+              <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Role </th> -->
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Created On</th>
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Last Login</th>
 
@@ -21,7 +21,7 @@
           </thead>
           <tbody>
             <tr v-for="user in users" :key="user.id">
-            <!-- <tr v-for="(user, index) in users" :key="index"></tr> -->
+              <!-- <tr v-for="(user, index) in users" :key="index"></tr> -->
               <td>
                 <div class="d-flex px-2 py-1">
                   <div>
@@ -33,14 +33,16 @@
                   </div>
                 </div>
               </td>
-              
+
               <td class="align-middle text-center text-sm">
                 <span v-if="!user.isActive" class="badge badge-sm bg-gradient-success">Active</span>
                 <span v-else class="badge badge-sm bg-gradient-danger">Inactive</span>
               </td>
-              <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold">{{ user.role }}</span>
-              </td>
+              <!-- <td class="align-middle text-center">
+                <span v-for="role in user.roles" :key="role.name" class="text-secondary text-xs font-weight-bold">{{
+                  role.name }}</span> -->
+              <!-- <span v-if="user.roles.length > 1 && user.roles.indexOf(role) !== user.roles.length - 1">,</span> -->
+              <!-- </td> -->
               <td class="align-middle text-center">
                 <span class="text-secondary text-xs font-weight-bold">{{ formatDate(user.date_joined) }}</span>
               </td>
@@ -48,13 +50,17 @@
                 <span class="text-secondary text-xs font-weight-bold">{{ formatDate(user.last_login) }}</span>
               </td>
               <td class="align-middle">
+                <argon-button color="success" size="md" variant="gradient" @click="prepareUserRole(user)" type="button"
+                  class="ml-4 btn btn-danger" data-toggle="modal" data-target="#exampleModal2">
+                  View Role
+                </argon-button>
                 <!-- <a
                   href="javascript:;"
                   class="text-secondary font-weight-bold text-xs"
                   data-toggle="tooltip"
                   data-original-title="Edit user"
                 >Assign Roles</a> -->
-                <argon-button color="success" size="md" variant="gradient" @click="prepareRename(user)" type="button"
+                <argon-button color="success" size="md" variant="gradient" @click="prepareAssignRoles(user)" type="button"
                   class="ml-4 btn btn-danger" data-toggle="modal" data-target="#exampleModal">
                   Assign Roles
                 </argon-button>
@@ -66,48 +72,63 @@
     </div>
   </div>
   <div class="modal fade" ref="myModal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="exampleModalLabel">Select Roles</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Owner
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Viewer
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Editor
-                        </label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <argon-button color="secondary" size="md" variant="gradient" type="button" class="ml-4 btn btn-danger"
-                        data-toggle="modal" data-target="#exampleModal">
-                        Cancel
-                    </argon-button>
-                    <argon-button color="danger" size="md" variant="gradient" @click.prevent="assignRole()" type="button"
-                        class="ml-4 btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-                        Assign Roles
-                    </argon-button>
-                </div>
-            </div>
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Select Roles</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+
+        <!-- Inside your modal body -->
+        <div class="form-check" v-for="role in roles" :key="role.name">
+          <input v-model="selectedRoles" class="form-check-input" type="checkbox" :value="role.name"
+            :id="'roleCheckbox_' + role.name">
+          <label class="form-check-label" :for="'roleCheckbox_' + role.name">{{ role.name }}</label>
+        </div>
+
+        <div class="modal-footer">
+          <argon-button color="secondary" size="md" variant="gradient" @click="isModalVisible = false" type="button"
+            class="ml-4 btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+            Cancel
+          </argon-button>
+          <argon-button color="danger" size="md" variant="gradient" @click.prevent="assignRoles(user)" type="button"
+            class="ml-4 btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+            Assign Roles
+          </argon-button>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="modal fade" ref="myModal" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">User Role</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <!-- Inside your modal body -->
+        <div class="form-check" v-if="selectedUser">
+          <label class="form-check-label">Username: {{ selectedUser.username }}</label><br>
+          <label class="form-check-label">Assigned Role: {{ formattedRoles || 'No Role Assign' }}</label>
+        </div>
+
+        <div class="modal-footer">
+          <argon-button color="secondary" size="md" variant="gradient" @click="isModalVisible = false" type="button"
+            class="ml-4 btn btn-danger" data-toggle="modal" data-target="#exampleModal2">
+            Close
+          </argon-button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
   
 <script>
@@ -126,24 +147,121 @@ export default {
   data() {
     return {
       users: [], // Initialize clusters as an empty array
+      isModalVisible: false,
+      roles: [
+        { id: 1, name: 'Owner' },
+        { id: 2, name: 'Viewer' },
+        { id: 3, name: 'Editor' },
+        // Add more roles as needed
+      ],
+      selectedRoles: [],
+      selectedUser: null,
+      successMessage: null,
     };
   },
   mounted() {
     // Fetch data when the component is mounted
     this.fetchusers();
+    this.fetchRoles();
   },
-  methods: {
-    assignRole(user) {
-      // Emit an event to notify the parent component about the rename action
-      this.renamingProjectId = user.id;
-      this.newProjectName = user.project_name;
-      this.$emit("assign-roles", user);
+  computed: {
+    formattedRoles() {
+      if (Array.isArray(this.selectedRoles)) {
+        return this.selectedRoles.join(', ');
+      }
+      return ''; // or some default value if selectedRoles is not an array
     },
+  },
+
+  methods: {
+    async prepareUserRole(user) {
+      try {
+        // Assign the user before fetching user roles
+        this.selectedUser = user;
+        // Fetch user roles dynamically using the user's ID
+        const response = await axios.get(`http://172.16.1.97:8002/api/v1/get_user_role/${this.selectedUser.id}/`);
+        console.log('API Response:', response);
+
+        if (response.data && Array.isArray(response.data.user_roles)) {
+          // Extract roles from the array of strings
+          this.selectedRoles = response.data.user_roles.map(roleString => {
+            // Assuming roleString is in the format 'username - role'
+            const parts = roleString.split(' - ');
+            return parts[1];  // Extract the role part
+          });
+
+          console.log('User roles fetched successfully:', this.selectedRoles);
+          this.isModalVisible = true;
+        } else {
+          console.error('Failed to fetch user roles:', response.data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching user roles:', error);
+      }
+    },
+    prepareAssignRoles(user) {
+      // Set the selected user and reset selected roles
+      this.selectedUser = user;
+      this.selectedRoles = [];
+      // Show the modal
+      this.isModalVisible = true;
+      this.fetchRoles(user.id);
+    },
+    async fetchRoles() {
+      try {
+        const response = await axios.get(`http://172.16.1.97:8002/api/v1/users/`,
+          {
+            user_id: this.selectedUser.id,
+          });
+        console.log('API Response:', response)
+
+        if (response && response.data && response.data.success) {
+          // Update the roles for the selected user
+          this.selectedRoles = response.data.roles.map(role => role.name);
+          console.log('Roles fetched successfully:', this.selectedRoles);
+        } else {
+          console.error('Failed to fetch roles:', response.data.message);
+        }
+      } catch (error) {
+        console.error('Error fetching roles:', error);
+      }
+    },
+    async assignRoles() {
+      try {
+        // Check if selectedUser is defined
+        if (!this.selectedUser) {
+          console.error('No user selected.');
+          return;
+        }
+        const response = await axios.post(`http://172.16.1.97:8002/api/v1/add_roles_to_user/`,
+          {
+            user_id: this.selectedUser.id,
+            roles: this.selectedRoles,
+          }
+        );
+
+        if (response.data.success) {
+          console.log('Roles assigned successfully:', response.data.message);
+          // Fetch roles for the selected user after assigning
+          await this.fetchRoles();
+          // Assuming the API response structure
+          const newRole = response.data.roles.length > 0 ? response.data.roles[0].name : null;
+          this.$set(this.selectedRoles, 0, newRole);
+        }
+
+        // Close the modal
+        this.isModalVisible = false;
+      } catch (error) {
+        console.error('Error assigning roles:', error);
+      }
+    },
+
+
     async fetchusers() {
       try {
         // Make a GET request to the endpoint
         const response = await axios.get('http://172.16.1.97:8002/api/v1/users/');
-        
+
         // Update the clusters data with the fetched data
         this.users = response.data;
       } catch (error) {
@@ -151,12 +269,12 @@ export default {
       }
     },
     formatDate(dateString) {
-    // Format the date as per your requirement using a library like moment.js
-    // Example using JavaScript built-in methods (customize as needed):
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
-  },
-  
+      // Format the date as per your requirement using a library like moment.js
+      // Example using JavaScript built-in methods (customize as needed):
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString('en-US', options);
+    },
+
   },
 };
 </script>

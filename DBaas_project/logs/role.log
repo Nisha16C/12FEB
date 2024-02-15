@@ -1,0 +1,45 @@
+2024-02-13 09:40:03,737 level=INFO user=nisha msg=Roles assigned: Editor 
+2024-02-13 09:56:45,222 level=INFO user=niya msg=Roles assigned: Editor 
+2024-02-13 10:06:07,794 level=INFO user=niya msg=Roles assigned: Owner 
+2024-02-13 10:07:30,978 level=INFO user=ashish msg=Roles assigned: Owner 
+2024-02-13 10:35:17,270 level=INFO user=niya msg=Roles assigned: Viewer 
+2024-02-13 10:40:26,592 level=INFO user=niya msg=Roles assigned: Viewer 
+2024-02-13 10:43:02,257 level=INFO user=admin msg=Roles assigned: Owner 
+2024-02-13 10:44:58,972 level=INFO user=aastha msg=Roles assigned: Viewer 
+2024-02-13 10:57:54,967 level=INFO user=rr msg=Roles assigned: Viewer 
+2024-02-13 11:04:13,140 level=INFO user=pp msg=Roles assigned: Viewer 
+2024-02-14 04:49:31,819 level=INFO user=r1 msg=Roles assigned: Owner 
+2024-02-14 07:30:39,567 level=INFO user=rr msg=Roles assigned: Viewer 
+2024-02-14 07:49:30,047 level=INFO user=nisha msg=Roles assigned: Editor 
+2024-02-14 09:28:08,696 level=INFO user=nisha msg=Roles assigned: Editor 
+2024-02-14 09:34:29,609 level=INFO user=ni msg=Roles assigned: Viewer 
+2024-02-14 10:45:01,672 level=INFO user=ni msg=Roles assigned: Viewer 
+2024-02-14 12:36:07,399 level=INFO user=ni msg=Roles assigned: Editor 
+2024-02-15 04:59:25,262 level=INFO user=default-ashish msg=Roles assigned: Owner 
+2024-02-15 05:07:27,599 level=INFO user=default-ashish msg=Roles assigned: Owner 
+2024-02-15 05:54:30,590 level=INFO user=ni msg=Roles assigned: Owner 
+2024-02-15 06:01:25,548 level=INFO user=default-ashish msg=Roles assigned: Owner 
+2024-02-15 06:01:47,705 level=INFO user=admin msg=Roles assigned: Owner 
+2024-02-15 06:02:02,984 level=INFO user=preeti123 msg=Roles assigned: Editor 
+2024-02-15 10:12:06,783 level=INFO user=preeti123 msg=Roles assigned: Owner 
+2024-02-15 10:12:36,255 level=INFO user=preeti123 msg=Roles assigned: Owner 
+2024-02-15 10:12:56,324 level=INFO user=preeti123 msg=Roles assigned: Editor 
+2024-02-15 10:18:17,900 level=INFO user=default-ashish msg=Roles assigned: Viewer 
+2024-02-15 10:18:51,001 level=INFO user=default-ashish msg=Roles assigned: Editor 
+2024-02-15 10:40:31,149 level=INFO user=preeti123 msg=Roles assigned: Editor 
+2024-02-15 10:41:34,707 level=INFO user=preeti123 msg=Roles assigned: Viewer 
+2024-02-15 11:01:52,620 level=INFO user=default-ashish msg=Roles assigned: Owner 
+2024-02-15 11:02:16,476 level=INFO user=default-ashish msg=Roles assigned: Viewer 
+2024-02-15 11:47:33,735 level=INFO user=default-ashish msg=Roles assigned: Editor 
+2024-02-15 11:50:25,276 level=INFO user=default-ashish msg=Roles assigned: Owner 
+2024-02-15 11:50:56,562 level=INFO user=default-ashish msg=Roles assigned: Editor 
+2024-02-15 12:01:02,697 level=INFO user=default-ashish msg=Roles assigned: Viewer 
+2024-02-15 12:03:13,391 level=INFO user=preeti123 msg=Roles assigned: Viewer, Editor 
+2024-02-15 12:13:35,554 level=INFO user=default-ashish msg=Roles assigned: Viewer 
+2024-02-15 12:14:09,150 level=INFO user=default-ashish msg=Roles assigned: Editor 
+2024-02-15 12:22:54,395 level=INFO user=default-ashish msg=Roles assigned:  
+2024-02-15 12:23:34,409 level=INFO user=default-ashish msg=Roles assigned:  
+2024-02-15 12:28:53,174 level=INFO user=admin msg=Roles assigned:  
+2024-02-15 12:30:53,306 level=INFO user=admin msg=Roles assigned:  
+2024-02-15 12:32:44,069 level=INFO user=preeti123 msg=Roles assigned:  
+2024-02-15 12:36:08,277 level=INFO user=preeti123 msg=Roles assigned: Viewer 
